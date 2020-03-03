@@ -6,7 +6,9 @@
 </p>
 
 ### Features
-* **Checks daily if any licenses have only 60, 30, 14, 7, 5 <= days remaining on it's license if so it will send an email to all contacts associated**
+* **Checks daily if any licenses have only 60, 30, 14, 7, or <= 5 days remaining on it's license if so it will send an email to all contacts associated**
+* **SQL Express - for storing license data & contacts**
+* **Clean user-friendly UI**
 
 #### Developed using the following key technologies:
  * **Java**
