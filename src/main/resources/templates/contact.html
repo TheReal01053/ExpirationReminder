@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- javascript -->
+
+    <!--<script th:src="@{/assets/js/fontawesome.min.js}"></script>
+    <script th:src="@{/assets/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/assets/js/jquery-3.4.1.slim.min.js}"></script>
+    <script th:src="@{/assets/js/popper.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+    <script th:src="@{/assets/js/jquery-datatables.min.js}"></script>
+    <script th:src="@{/assets/js/datatables-bootstrap.min.js}"></script>-->
+
+    <script src="https://kit.fontawesome.com/e51f06d2f7.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" ></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" ></script>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+    <!-- External static stylesheets -->
+    <link rel="stylesheet" th:href="@{/css/contact.css}"/>
+
+    <!-- top nav bar section -->
+    <section class="nav-section pb-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href=""><span style="color:#7289da">Expiration</span>Reminder</a>
+
+            <div>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i style="color:white" class="fas fa-calendar-alt"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/license"><i style="color:white" class="fas fa-list-alt"></i> License</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/contact"><i style="color:white" class="fas fa-users"></i> Contacts <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+    <style>
+        .footer {
+           position: fixed;
+           left: 0;
+           bottom: 0;
+           width: 100%;
+           background-color: red;
+           color: white;
+           text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="hideContact()">
+
+<div id="add-user-btn" class="py-3">
+    <a href="#" id="add-btn"><i style="color: #263238; font-size: 25px" class="fas fa-user-plus pl-2"></i></a>
+</div>
+<div id="minus-user-btn" class="py-3">
+    <a href="#" id="minus-btn"><i style="color: #263238; font-size: 25px" class="fas fa-user-minus pl-2"></i></a>
+</div>
+
+<div class="container">
+    <form id="contact-form" name="contact-form" class="text-center border border-light p-5" action="/api/contact/new" method="POST">
+
+        <p class="h4 mb-4">Contact Details</p>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend mb-2">
+                <div class="input-group-text"><i class="fas fa-user" style="color:grey;"></i></div>
+            </div>
+            <input type="text" id="contactName" name="contactName" class="form-control mb-2" placeholder="John Doe">
+        </div>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend mb-2">
+                <div class="input-group-text"><i class="fas fa-envelope" style="color:grey;"></i></div>
+            </div>
+            <input type="text" id="contactEmail" name="contactEmail" class="form-control mb-2" placeholder="test@test.com">
+        </div>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend mb-2">
+                <div class="input-group-text"><i class="fas fa-phone" style="color:grey;"></i></div>
+            </div>
+            <input type="text" id="contactPhone" name="contactPhone" class="form-control mb-2" placeholder="Phone (Optional)">
+        </div>
+
+        <!-- Send button -->
+        <p id="errorMsg" style="color:red;"></p>
+        <button id="submitContact" class="btn btn-dark pr-4 pl-4" style="outline: none" type="submit">Submit</button>
+    </form>
+</div>
+
+
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table id="contactTable" class="contact-table table data-table dt-head-center">
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $('#submitContact').mouseup(function() { this.blur() })
+    $('#deleteButton').mouseup(function() { this.blur() })
+    var contactTable = $(".contact-table");
+
+    $(document).ready(function () {
+        contactTable.DataTable({
+            "ordering": false, //set to false causes some weird padding bug.... not required I will do my own sorting.
+            /*"paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "info": true,*/
+
+            ajax: {
+                url: "/api/contact/findAll",
+                dataSrc: ""
+            },
+            columns: [
+                //{ title: "Id", data: "contactId" },
+
+                { title: "Name", "className": "text-center", data: "contactName" },
+                { title: "Email", "className": "text-center", data: "contactEmail" },
+                { title: "Phone", "className": "text-center", data: "contactPhone" },
+                { "data": null, "className": "text-center", render:function(data, type, row) { return '<button id="deleteButton" type="button" class="btn btn-dark">Delete</button>'; }, "targets": -1 }
+            ]
+        });
+    });
+    
+    $('#contactTable tbody').on('click', 'button', function () {
+        var tr = $(this).closest('tr');
+        var data = contactTable.DataTable().row(tr).data();
+        var answer = confirm('Do you want to delete this contact from the database?');
+        if (answer) {
+            var contactId = data.contactId;
+            $.post('/api/contact/deleteContactById', { contactId }, function() {
+                contactTable.DataTable().ajax.reload();
+            });
+        }
+    });
+
+    function hideContact() {
+        var error = $("")
+        $(document).ready(function() {
+            $("#contact-form").hide();
+            $("#minus-user-btn").hide();
+            $("#errorMsg").hide();
+
+        });
+    }
+
+    $(document).ready(function(){
+      $("#add-btn").click(function(){
+        $("#add-user-btn").hide();
+        $("#minus-user-btn").fadeIn();
+        $("#contact-form").fadeIn();
+        });
+    });
+
+    $(document).ready(function(){
+            $("#minus-btn").click(function(){
+            $("#add-user-btn").fadeIn();
+            $("#minus-user-btn").hide();
+            $("#contact-form").fadeOut();
+            $("#contactName").val('');
+            $("#contactEmail").val('');
+            $("#contactPhone").val('');
+        });
+    });
+
+    $(document).ready(function() {
+        $('#contact-form').submit(function(e) {
+
+            var validation = {
+                isEmailAddress:function(str) {
+                    var pattern =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                    return pattern.test(str);  // returns a boolean
+                },
+                isNotEmpty:function (str) {
+                    var pattern =/\S+/;
+                    return pattern.test(str);  // returns a boolean
+                },
+                isNumber:function(str) {
+                    var pattern = /^\d+$/;
+                    return pattern.test(str);  // returns a boolean
+                },
+                isSame:function(str1,str2){
+                    return str1 === str2;
+                }
+            }; 
+
+            var error = $('#errorMsg');
+            var errorText = document.getElementById("errorMsg");
+            e.preventDefault();
+            var contactName = $('#contactName').val();
+            var contactEmail = $('#contactEmail').val();
+            var contactPhone = $('#contactPhone').val();
+            errorText.innerHTML = "";
+
+            if (!validation.isNotEmpty(contactName)) {
+                errorText.innerHTML = "You must enter a valid name!"
+                error.fadeIn();
+                return;
+            }
+
+            if (!validation.isEmailAddress(contactEmail)) {
+                errorText.innerHTML = "You must enter a valid email address!"
+                error.fadeIn();
+                return;
+            }
+
+            $("#contactName").val('');
+            $("#contactEmail").val('');
+            $("#contactPhone").val('');
+            $.post('/api/contact/new', {contactName, contactEmail, contactPhone}, function(){
+                error.hide();
+                contactTable.DataTable().ajax.reload();
+            });
+        });
+    });
+</script>
+<section>
+    <div>
+        <footer class="page-footer font-small special-color-dark pt-2">
+
+            <div class="container">
+                <ul  class="list-unstyled list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/in/micheal-thompson-46025b187/" class="btn-floating btn-li mx-1">
+                            <i class="fab fa-linkedin-in"> </i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/thereal01053" class="btn-floating btn-li mx-1">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-copyright text-center py-3">© 2020 Micheal Thompson. All rights reserved</div>
+        </footer>
+    </div>
+</section>
+</body>
+</html>

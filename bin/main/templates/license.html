@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- javascript -->
+    <script src="https://kit.fontawesome.com/e51f06d2f7.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" ></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+    <!--<link href="https://fk.github.io/select2-bootstrap-css/css/select2-bootstrap.css" rel="stylesheet" />-->
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+
+
+
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+    <!-- External static stylesheets -->
+    <link rel="stylesheet" th:href="@{/css/license.css}"/>
+
+    <!-- top nav bar section -->
+    <section class="nav-section pb-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href=""><span style="color:#7289da">Expiration</span>Reminder</a>
+
+            <div>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i style="color:white" class="fas fa-calendar-alt"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/license"><i style="color:white" class="fas fa-list-alt"></i> License <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact"><i style="color:white" class="fas fa-users"></i> Contacts</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+    <style>
+        .footer {
+           position: fixed;
+           left: 0;
+           bottom: 0;
+           width: 100%;
+           background-color: red;
+           color: white;
+           text-align: center;
+        }
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+    </style>
+</head>
+
+<body id="pageContent" onload="setDefaults()">
+
+<div class="container">
+    <form id="addLicense" name="addLicense" class="text-center border border-light p-5" action="/api/license/new" method="POST">
+
+        <p class="h4 mb-4">License Details</p>
+
+
+        <!--<div class="form-group">
+            <div class="input-group select2-bootstrap4-prepend">
+                <select id="licenseContact" class="form-control select2-multiple" multiple>
+                    <option th:each="contact : ${ contact }" th:value="${ contact.contactId }" th:text="${ contact.contactName }">
+                </select>
+            </div>
+        </div>-->
+
+        <div class="input-group mb-2">
+            <select id="licenseContact" class="browser-default custom-select select2-multiple" multiple>
+                <option th:each="contact : ${ contact }" th:value="${ contact.contactId }" th:text="${ contact.contactName }">
+            </select>
+        </div>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend mb-2">
+                <div class="input-group-text"><i class="fas fa-list-alt" style="color:grey;"></i></div>
+            </div>
+            <input type="text" name="licenseSerial" id="licenseSerial" class="form-control mb-2" placeholder="Serial">
+        </div>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend mb-2">
+                <div class="input-group-text"><i class="fas fa-user" style="color:grey;"></i></div>
+            </div>
+            <input type="text" id="clientName" name="clientName" class="form-control mb-2" placeholder="Client">
+        </div>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend mb-2">
+                <div class="input-group-text"><i class="fas fa-id-card" style="color:grey;"></i></div>
+            </div>
+            <input type="text" id="licenseName" name="licenseName" class="form-control mb-2" placeholder="License">
+        </div>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend mb-2">
+                <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true" style="color:grey;"></i></div>
+            </div>
+            <input type="date" id="renewalDate" name="renewalDate" class="form-control mb-2">
+        </div>
+
+        <p id="errorMsg" style="color:red;"></p>
+        <button id="submitLicense" class="btn btn-dark pr-4 pl-4" style="outline: none" type="submit">Track</button>
+    </form>
+</div>
+<script>
+    $( ".select2, .select2-multiple" ).select2({
+        placeholder: 'Choose contacts',
+    });
+
+    $('#submitLicense').mouseup(function() { this.blur() })
+    function setDefaults() {
+        var error = $("#errorMsg");
+        error.hide();
+    }
+    var date = new Date().toISOString().slice(0,10);
+    $('#renewalDate').attr('min', date);
+
+    $(document).ready(function() {
+        $('#addLicense').submit(function(e) {
+
+            var validation = {
+                isEmailAddress:function(str) {
+                    var pattern =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                    return pattern.test(str);  // returns a boolean
+                },
+                isNotEmpty:function (str) {
+                    var pattern =/\S+/;
+                    return pattern.test(str);  // returns a boolean
+                },
+                isNumber:function(str) {
+                    var pattern = /^\d+$/;
+                    return pattern.test(str);  // returns a boolean
+                },
+                isSame:function(str1,str2){
+                    return str1 === str2;
+                }
+            }; 
+
+            var error = $('#errorMsg');
+            var errorText = document.getElementById("errorMsg");
+            e.preventDefault();
+            var contactId = $('#licenseContact').val();
+            var licenseSerial = $('#licenseSerial').val();
+            var clientName = $('#clientName').val();
+            var licenseName = $('#licenseName').val();
+            var renewalDate = $('#renewalDate').val();
+            errorText.innerHTML = "";
+
+            var contactsId = contactId.toString(); //string of contactIds to post to #addLicense method
+
+            if (contactId == null) {
+                errorText.innerHTML = "You must select a contact for this license!"
+                error.fadeIn();
+                return;
+            }
+
+            if (!validation.isNotEmpty(licenseSerial)) {
+                errorText.innerHTML = "You must enter a valid serial number!"
+                error.fadeIn();
+                return;
+            }
+
+            if (!validation.isNotEmpty(clientName)) {
+                errorText.innerHTML = "You must enter the name of the client this license is associated with!"
+                error.fadeIn();
+                return;
+            }
+
+            if (!validation.isNotEmpty(licenseName)) {
+                errorText.innerHTML = "You must enter a license name!"
+                error.fadeIn();
+                return;
+            }
+
+            if (!validation.isNotEmpty(renewalDate)) {
+                errorText.innerHTML = "You must enter a valid date!"
+                error.fadeIn();
+                return;
+            }
+
+            $.post('/api/license/new', { contactsId, licenseSerial, clientName, licenseName, renewalDate }, function(){
+                error.hide();
+                alert("Successfully added license to database!");
+            });
+
+            $("#licenseSerial").val('');
+            $("#clientName").val('');
+            $("#licenseName").val('');
+            $("#renewalDate").val('');
+        });
+    });
+</script>
+<section>
+    <div class="footer">
+        <footer class="page-footer font-small special-color-dark pt-2">
+
+            <div class="container">
+                <ul  class="list-unstyled list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/in/micheal-thompson-46025b187/" class="btn-floating btn-li mx-1">
+                            <i class="fab fa-linkedin-in"> </i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/thereal01053" class="btn-floating btn-li mx-1">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-copyright text-center py-3">© 2020 Micheal Thompson. All rights reserved</div>
+        </footer>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,43 @@
+section .nav-section {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+}
+
+footer.page-footer {
+    bottom: 0;
+    color: #fff
+}
+
+footer.page-footer .container-fluid {
+    width: auto
+}
+
+footer.page-footer .footer-copyright {
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 0, 0, 0.2)
+}
+
+footer.page-footer a {
+    color: #fff
+}
+
+.special-color-dark {
+    background-color: #263238 !important
+}
+
+.license-table {
+  text-align: center;
+}
+
+.center-contact {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-group.select2-bootstrap-prepend {
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
